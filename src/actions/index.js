@@ -5,13 +5,17 @@ export const FETCHED = "FETCHED";
 export const ERROR = "ERROR";
 // we'll need to create 3 different action types here.
 // one for fetching, one for fetched and one for errors
+
 export const fetchData = () => {
   const request = axios.get("https://swapi.co/api/people/");
   return dispatch => {
-    request.then(({ data }) => {
+    dispatch({
+      type: FETCHING
+    });
+    request.then(response => {
       dispatch({
-        type: FETCHING,
-        payload: data
+        type: FETCHED,
+        payload: response.data
       }).catch(err => {
         dispatch({
           type: ERROR,

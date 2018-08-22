@@ -1,8 +1,8 @@
-import {FETCHING, FETCHED, ERROR} from '../actions';
+import { FETCHING, FETCHED, ERROR } from "../actions";
 
 const initialState = {
   chars: [],
-  fetching: true,
+  fetching: false,
   fetched: false,
   error: null
   // define a few properties here.
@@ -11,19 +11,17 @@ const initialState = {
 export const charsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCHING:
-    return {
-      ...state
-    }
+      return Object.assign({}), state, { fetching: true };
 
     case FETCHED:
-    return {
-      ...state
-    }
+      return {
+        ...state
+      };
 
     case ERROR:
-    return {
-      ...state
-    }
+      return {
+        ...state
+      };
     // Fill me in with the important reducers
     // action types should be FETCHING, FETCHED, and ERROR
     // your switch statement should handle all of these cases.
