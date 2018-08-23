@@ -8,10 +8,12 @@ import {fetchData} from "../actions";
 
 class App extends Component {
   componentDidMount() {
-    fetchData()
+    console.log("yo we mounted")
+    this.props.fetchData()
     // call our action
   }
   render() {
+    console.log(this.props)
     return (
       <div className="App">
         {this.props.fetching ? (
@@ -30,22 +32,15 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    AppState: state
+    chars: state.charsReducer.char
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchData() {
-      dispatch(fetchData)
-    }
-  };
-};
 
 // our mapDispatchToProps needs to have two properties inherited from state
 // the chars and the fetching boolean
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {fetchData}
   /* actions go here */
 )(App);

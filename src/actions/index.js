@@ -7,15 +7,17 @@ export const ERROR = "ERROR";
 // one for fetching, one for fetched and one for errors
 
 export const fetchData = () => {
+    console.log("hi")
   const request = axios.get("https://swapi.co/api/people/");
   return dispatch => {
     dispatch({
       type: FETCHING
     });
     request.then(response => {
+        console.log(response)
       dispatch({
         type: FETCHED,
-        payload: response.data
+        payload: response.data.results
       }).catch(err => {
         dispatch({
           type: ERROR,
