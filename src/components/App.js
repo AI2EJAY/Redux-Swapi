@@ -6,12 +6,18 @@ import "../styles/App.css";
 import {fetchData} from "../actions";
 // pull in actions from action/index
 
+
 class App extends Component {
   componentDidMount() {
-    console.log("yo we mounted")
-    this.props.fetchData()
     // call our action
+    this.props.fetchData(); // not sure if this is the right name 
+	
+    const fetchedItems = JSON.parse(localStorage.getItem('fetched'));
+    if (fetchedItems !== null) {
+      this.props.fetched(fetchedItems);
+    }
   }
+
   render() {
     console.log(this.props)
     return (
@@ -19,28 +25,29 @@ class App extends Component {
         {this.props.fetching ? (
           <img src={logo} className="App-logo" alt="logo" />
         ) : (
-          <ul>
-            {this.props.chars.map(char => {
-              return <li key={char.name}>{char.name}</li>;
-            })}
-          </ul>
-        )}
+            <ul>
+              {this.props.chars.map(char => {
+                console.log(char.name)
+                // return <li key={char.name}>{char.name}</li>;
+              })}
+            </ul>
+          )}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+// our mapDispatchToProps needs to have two properties inherited from state
+// the chars and the fetching boolean
+
+const mapDispatchToProps = state => {
   return {
-    chars: state.charsReducer.char
+    chars: state.charsReducer.chars
   };
 };
+
+export default connect(mapDispatchToProps, { fetchData })(App);
 
 
 // our mapDispatchToProps needs to have two properties inherited from state
 // the chars and the fetching boolean
-export default connect(
-  mapStateToProps,
-  {fetchData}
-  /* actions go here */
-)(App);
